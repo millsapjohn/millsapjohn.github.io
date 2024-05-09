@@ -10,8 +10,26 @@ Additionally, I split my development time between Windows and Linux machines; th
 With those two facts in mind, here are the tools I use, and some thoughts on why:
 
 ### Linux Laptop: System76 Lemur Pro
+I found Pop!_OS a while ago and really like it. System76 is the company that maintains Pop, and using their laptops just removes any pain points with making sure that it works seamlessly with the hardware. It's also very light and quite powerful!
 
 ### Custom Keyboard: Cyboard Imprint
+In 2020, I lost part of my right index finger in a woodworking accident. This makes typing on a normal keyboard pretty annoying, although not impossible. In fact, I didn't switch for several years afterward (mainly because I didn't really know that custom keyboards were even available).
+
+Cyboard is a small company that makes keyboards custom-designed to fit your specific hands - when you order one, you send in a picture of both your hands (next to a credit card for scale), and they use their own proprietary fitting algorithms to design a keyboard that is, in theory, perfectly fitted for your hands.
+
+I can confirm that, in my case at least, it works swimmingly. I can actually reach the keys on my right index finger!
+
+Getting a bespoke keyboard has also allowed me to design custom firmware for the keyboard (based on the open-source QMK project), which allows me to do all sorts of cool things like create an alternative key layout, use custom key combinations, and other cool features. I'll do a blog post in the future about my key map.
+
+### Mouse: Ploopy Thumb
+I started using thumb trackballs several years ago. As a civil engineer, I spend a lot of time doing CAD (computer-aided design, aka drafting). I noticed that, after a long CAD session (which consists of a LOT of precision mouse work), my right hand would be exhausted, and my shoulders would be tense and painful. Switching to a thumb trackball got rid of both issues almost instantly.
+
+For a long time, I used Logitech devices. The Ploopy though has two advantages:
+
+- it has an extra button on the right side (under the pinky)
+- it runs on QMK, meaning it can be extensively customized
+
+While the customizations aren't as extensive as what I have on my keyboard (fewer buttons, after all), they still make a big difference to productivity. I'll do a future blog post about my CAD setup, which is a little wacky!
 
 ### Linux Distro: Pop!_OS
 I like Pop!_OS for several reasons. One, while I do like tweaking things in general, I had to try to limit my own madness somehow or I'd never actually do anything productive. Pop!_OS is an Ubuntu-based distro that works smoothly out of the box, and doesn't need any tweaking to be perfectly functional for most use cases.
