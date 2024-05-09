@@ -15,7 +15,7 @@ The pre-generated `activate.nu` script that `venv` creates is, unfortunately, so
 
 The last line of the script is where the issue lies; it looks like this:
 
-  export alias deactivate = overlay hide deactivate
+    export alias deactivate = overlay hide deactivate
 
 If you try to use this script, the nu interpreter will complain that the `overlay` keyword can't be used in a pipeline; so I simply comment it out. But what does that mean?
 
@@ -27,11 +27,11 @@ PyLSP can resolve any Python modules that are currently in the `PYTHONPATH` envi
 
 Nushell files allow you to set environment variables with the `load-env` keyword. So somewhere in `activate.nu`, I define a variable with the list of paths I need. Once again, I've found that this requires some special attention, as it seems PyLSP only recognizes these paths when they're stored the way Windows natively stores them: as a single string, separated by semicolons. For simplicity's sake and to avoid retyping, I saved the string in my .config directory as a plain text file. Then I add this to `activate.nu`:
 
-  load-env {PYTHONPATH: (open ($nu.default-config-dir | path join "qpath.txt"))}
+    load-env {PYTHONPATH: (open ($nu.default-config-dir | path join "qpath.txt"))}
 
 Now, activate the environment, from the root of my repo, I just run 
 
-  overlay use .venv/Scripts/activate.nu
+    overlay use .venv/Scripts/activate.nu
 
 and voila! Not only is the Python virtual environment working, but I have my QGIS modules available for PyLSP.
 
