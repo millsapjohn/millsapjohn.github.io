@@ -7,3 +7,5 @@ title = "John Millsap's Personal Site"
 [Blog](/blog/)
 
 [About Me](/about/)
+
+[Projects](/projects/)
