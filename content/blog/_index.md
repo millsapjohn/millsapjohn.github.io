@@ -6,3 +6,4 @@ title = "Blog"
 [](qpython.md)
 [](dev_env.md)
 [](wbt.md)
+[](civillinux.md)
