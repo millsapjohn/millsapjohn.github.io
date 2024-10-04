@@ -1,5 +1,6 @@
 +++
 title = "Using Whitebox Tools in Drainage Workflows"
+date = "2024-05-17"
 +++
 
 I'm a drainage engineer by trade. Drainage engineering is a subfield of civil engineering, focused on a single question: what happens to a particular area when it rains?

@@ -1,5 +1,6 @@
 +++
 title = "Using the Project Setup Plugin and Macros to Expand QGIS Functionality"
+date = "2024-05-09"
 +++
 
 If you couldn't already tell, I'm a big fan of QGIS. Ideologically, I love supporting open-source projects whenever possible; pragmatically, I've found that QGIS performance over a VPN (a common scenario in an era of work from home and hybrid schedules) is **vastly** superior to ArcGIS Pro.

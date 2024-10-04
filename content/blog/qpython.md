@@ -1,5 +1,6 @@
 +++
 title = "Setting Up a Dev Environment for QGIS Plugins"
+date = "2024-05-09"
 +++
 
 A large part of my development work right now is spent on QGIS plugins. This is slightly complicated for a relatively inexperienced programmer like me because, like any good Python dev, I want to use virtual environments for anything complex, and the QGIS Python libraries aren't available from a standard repository; instead, they come bundled with the QGIS install as standard .py files. I've spent a decent amount of time figuring out how to get my venv set up correctly so I can avoid conflicting dependencies, while still having autocomplete/suggestions available in my text editor. Here's what I've worked out.

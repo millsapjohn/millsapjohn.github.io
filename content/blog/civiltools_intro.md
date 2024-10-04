@@ -1,5 +1,6 @@
 +++
 title = "Introducing CivilTools"
+date = "2024-10-04"
 +++
 
 As I mentioned in a previous blog post, civil engineering design is currently locked into essentially one of two choices for drafting software. Licenses to these software packages are extremely expensive, and there currently aren't any free alternatives that are remotely usable (no shade to FreeCAD, which is a fantastic piece of software, but not really intended for civil site design!). One of my goals for a while has been to create a FOSS alternative, and since I'm not really up for writing a full GUI package from scratch, that means writing a plugin for something existing.

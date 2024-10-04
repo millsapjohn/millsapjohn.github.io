@@ -1,5 +1,6 @@
 +++
 title = "Civil Consultancy on the Linux Platform"
+date = "2024-05-22"
 +++
 
 As I've mentioned elsewhere, I'm a civil engineer by trade. For all of my career thus far, I've worked for various consulting firms (i.e., I haven't been self-employed), and like everyone else I use the tools provided to me - a company-provided laptop and the licenses for whatever software they want me to use. Like many other enterprises, civil consulting is heavily tied to the Windows ecosystem; many industry-standard software packages are only available for Windows, and tools like Microsoft Office/MS Exchange are so much more convenient and ubiquitous than other alternatives that they're effectively the only options.
