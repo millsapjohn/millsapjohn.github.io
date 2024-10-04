@@ -1,6 +1,6 @@
 +++
 title = "Blog"
-sort-by = "date"
+sort_by = "date"
 +++
 
 [](qmacros.md)
