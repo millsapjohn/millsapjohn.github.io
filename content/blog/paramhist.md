@@ -1,5 +1,5 @@
 +++
-Title = "A Better QGIS History Plugin"
+title = "A Better QGIS History Plugin"
 date = "2024-10-14"
 +++
 
