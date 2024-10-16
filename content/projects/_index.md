@@ -15,3 +15,5 @@ All of my public projects can be found on my [GitHub page](https://github.com/mi
 [QGIS Macros](https://github.com/millsapjohn/qgis_macros) - my QGIS macros. They interact with the Project Setup Plugin in some ways that I think really expands QGIS functionality.
 
 [QGIS CivilTools](https://github.com/millsapjohn/qgis_civiltools) - my attempt to bring CAD tools to QGIS. In its infancy, this will be a huge project and won't reach maturity for a long time.
+
+[QGIS Parameter History](https://github.com/millsapjohn/qgis_paramhist) - a better processing history plugin. Shows history in a more-readable format, and allows users to re-open an algorithm with the previous parameters pre-loaded.
