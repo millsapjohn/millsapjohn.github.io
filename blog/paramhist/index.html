@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="robots" content="index, follow">
+
+
+
+
+
+
+
+
+
+
+<title>A Better QGIS History Plugin</title>
+
+
+
+<meta name="title" content="A Better QGIS History Plugin">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://millsapjohn.github.io/blog/paramhist/">
+
+<meta property="og:site_name" content="">
+
+
+<meta property="og:title" content="A Better QGIS History Plugin">
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://millsapjohn.github.io/blog/paramhist/">
+
+<meta property="twitter:title" content="A Better QGIS History Plugin">
+
+
+
+
+<link rel="canonical" href="https://millsapjohn.github.io/blog/paramhist/">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/reset-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/suCSS-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://millsapjohn.github.io/css/style.css"/>
+
+<script src="https://millsapjohn.github.io/js/script.js" defer></script>
+
+
+</head>
+<body>
+      <header>
+          
+
+  
+
+
+
+      </header>
+      <main>
+          
+<h1>A Better QGIS History Plugin</h1>
+
+
+
+<h1 id="processing-history-improved">Processing History, Improved</h1>
+<p>I guess I've caught the QGIS plugin bug. While I've continued to make progress on CivilTools (I'll post an update here soon), I've also been working on some other projects - in particular, I just released the &quot;Param History&quot; plugin!</p>
+<p>Often when I'm working in GIS, I find myself in situations where I need to run an algorithm several times, iterating the input parameters until I get results that make sense. Not a problem in itself, until I get a few steps down whatever process I'm in and realize that, actually, those results weren't quite what I wanted. By that point though I've forgotten what parameters I'd actually used! QGIS does save your processing history, of course, but it's not the most human-readable format.</p>
+<p>Enter the Param History plugin. It creates a panel in the main window displaying your processing history, but in a clearer, easier-to-read format. Additionally, you can click on a row in the history table and the plugin will automatically re-launch the algorithm window with the parameters pre-loaded, allowing you to easily pick up where you left off. There's an option to copy the (formatted) history to your clipboard if you want to store that information somewhere, and two search options (keyword, filter by timestamp). </p>
+<p>The biggest weakness of the plugin is that, as of now, it can only detect changes that happen to the map canvas. In other words, it can't detect failed algorithm runs, and it can't detect if you run an algorithm and choose not to add the results to the map. The first, in particular, is annoying - I need to keep looking into whether there's a signal somewhere that I'm missing in the docs that I can connect to. But overall, it works fairly well! In particular, I'm going to find this incredibly useful for doing raster operations like reclassifying by a table - having to re-enter a long table every time I wanted to change something was tedious.</p>
+<p>I have a laundry list of other plugins I want to create - while I do plan on continuing to focus most of my efforts on CivilTools, I'll probably keep doing what I did this week and periodically take breaks to work on other ideas. These include:</p>
+<ul>
+<li>custom menus (there's an existing plugin that does this, but it doesn't work well)</li>
+<li>docks that are minimized by default, and expand on hover (a la Civil3d)</li>
+<li>an upgraded browser panel, that allows more flexible organization, like subfolders</li>
+<li>an integrated basic calculator</li>
+<li>integrated resource browsers, like
+<ul>
+<li>the NOAA WCT (Weather &amp; Climate Toolkit)</li>
+<li>TNRIS resources</li>
+<li>SSURGO</li>
+</ul>
+</li>
+<li>an automated HMR51 PMP (Probable Maximum Precipitation) calculator</li>
+<li>implementing an anisotropic inverse distance weighted interpolation algorithm</li>
+<li>finding high and low points along a line</li>
+<li>semi-automated bankline finder</li>
+</ul>
+<p>and many more. Here's to the future of my kludgy, barely functional plugins!</p>
+
+
+<p class="tags-data">
+
+</p>
+
+      </main>
+      <footer>
+          <hr>
+<div id="footer-container">
+  
+  <div>
+    <p>Theme and color theme licensed under <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Licence_MIT">MIT</a>.<br>
+      Built with <a target="_blank" rel="noopener noreferrer" href="https://www.getzola.org">Zola</a> using <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/anemone">anemone</a> theme, <a target="_blank" rel="noopener noreferrer" href="https://speyll.github.io/suCSS/">suCSS</a> framework &amp; <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/veqev">veqev</a>.<br>
+    </p>
+
+  </div>
+  
+</div>
+
+      </footer>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="robots" content="index, follow">
+
+
+
+
+
+
+
+
+
+
+<title>Introducing CivilTools</title>
+
+
+
+<meta name="title" content="Introducing CivilTools">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://millsapjohn.github.io/blog/civiltools-intro/">
+
+<meta property="og:site_name" content="">
+
+
+<meta property="og:title" content="Introducing CivilTools">
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://millsapjohn.github.io/blog/civiltools-intro/">
+
+<meta property="twitter:title" content="Introducing CivilTools">
+
+
+
+
+<link rel="canonical" href="https://millsapjohn.github.io/blog/civiltools-intro/">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/reset-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/suCSS-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://millsapjohn.github.io/css/style.css"/>
+
+<script src="https://millsapjohn.github.io/js/script.js" defer></script>
+
+
+</head>
+<body>
+      <header>
+          
+
+  
+
+
+
+      </header>
+      <main>
+          
+<h1>Introducing CivilTools</h1>
+
+
+
+<p>As I mentioned in a previous blog post, civil engineering design is currently locked into essentially one of two choices for drafting software. Licenses to these software packages are extremely expensive, and there currently aren't any free alternatives that are remotely usable (no shade to FreeCAD, which is a fantastic piece of software, but not really intended for civil site design!). One of my goals for a while has been to create a FOSS alternative, and since I'm not really up for writing a full GUI package from scratch, that means writing a plugin for something existing.</p>
+<p>So without further ado, introducing CivilTools, the civil drafting plugin for QGIS!</p>
+<p>Well, not exactly. The plugin is currently in its infancy, doesn't really do anything yet, and isn't available from QGIS' plugin manager. If you really want to try it out, it's available on <a href="https://github.com/millsapjohn/qgis_civiltools">GitHub</a>, but again, it doesn't currently do anything except populate some menus and allow you to toggle a fancy crosshairs cursor. But I'm actively working on it, making some progress, and have what I believe is a viable roadmap - more on that below. But first, a note about the project philosophy, and some existing alternatives.</p>
+<h2 id="does-this-really-not-exist-elsewhere">Does This Really Not Exist Elsewhere?</h2>
+<p>Great question. The truth is that there are, indeed, drafting tools available for QGIS right now. First, QGIS itself has some built-in drafting tools that work reasonably well. Second, there's actually an existing QGIS plugin called QAD that, essentially, attempts to be a full-on clone of an existing CAD package. So why am I &quot;reinventing the wheel&quot;?</p>
+<p>In essence, it's a philosophical difference.</p>
+<h2 id="what-civiltools-is-not">What CivilTools Is Not</h2>
+<p>QAD is a really cool project, and the developer has done an impressive job of building up the core geometry tools that you'd find in CAD. But like I mentioned, as far as I can tell the project is intended to be a full-on clone of an existing CAD package, and I don't really want to do that - I don't want to force QGIS to be something it's not. For example, the project forces global UI changes - the cursor is permanently changed to the familiar crosshairs in all contexts within a map view, there's a permanent &quot;command line&quot;, etc. I don't want to force QGIS to be a full-time CAD package, I just want CAD tools available when I need them.</p>
+<p>The built-in QGIS drafting tools might be thought of as the opposite extreme - rather than trying to force QGIS to be a full-time drafting program, they're essentially bolted on as something of an afterthought, to give GIS technicians the option of tweaking the odd feature when an occasional need arises. And there's nothing wrong with that! QGIS is first and foremost intended to be GIS-focused, any CAD/drafting tools are <em>of course</em> an afterthought. </p>
+<p>What I want to strike is a nice middle ground. I want full-featured, robust drafting tools available when I need them, that work seamlessly. I also want them out of the way when I'm using QGIS as, you know, a <em>GIS</em> tool.</p>
+<h2 id="what-civiltools-is">What CivilTools Is</h2>
+<p>So with all that in mind, what I'm envisioning for CivilTools is for it to integrate fully into QGIS and to feel like a natural extension, albeit one that's hopefully much more powerful than the built-in tools, rather than a wholesale redesign that's just using an existing code base for convenience.</p>
+<p>The most obvious way this is reflected in the plugin is that, when you fire up QGIS with CivilTools installed, nothing looks immediately different. Rather than burning down the existing UI and starting over, CivilTools will act as an <em>available map tool</em>, much like the existing Pan, Zoom, Select, etc tools. It has to be toggled on, and can of course be toggled off.</p>
+<p>I'm also going to make an effort to reuse existing UI elements as much as possible. For example, the most popular CAD package out there is known for its &quot;command line,&quot; which is always listening for keyboard input, displays what you type in real time, and displays any available sub-options when a command is active. While it's early in the design process, I'm currently not expecting to do this at all; rather, I'm planning on only having the text you type show as a tooltip next to the cursor, and have the sub-options for a command display on the message bar at the top of the screen. I think this will be a nice middle ground that will feel familiar to users of both QGIS and CAD.</p>
+<p>Additionally, CivilTools will be <em>opinionated.</em> In the land of software, what this means is that a developer has strong feelings about the right and wrong way to do certain things, and the software will not be particularly flexible in allowing you to do things in the &quot;wrong&quot; way. What this means for CivilTools is that it will be pretty inflexible in terms of what layers it allows you to use for creating geometry. The plugin won't work until you create a GeoPackage for your project from the template it provides; after that, any geometry you create will only be created on its desired default layer. The exception will be if you create a modified default GeoPackage, but even there, you will only be able to use it if you create layers through the plugin's guidelines.</p>
+<p>My thought in doing it this way is that by ensuring certain defaults are always available, the plugin will be able to &quot;get out of the way&quot; and just let you draw stuff on the screen, much more so than if it relied on the user to supply the layers. For example, in QGIS, you can only use the &quot;create points&quot; tool if you've selected a layer whose geometry type is points, and if that layer is currently active. Makes sense, but when you're really in the weeds of drawing something, it can get annoying to constantly be clicking different layers. By ensuring that sensible default layers are always available and always editable, the plugin will be able to work much more smoothly. If the user enters the Point command, the plugin knows to set the default points layer as active; no need for extra clicks!</p>
+<h2 id="what-civiltools-will-do">What CivilTools Will Do</h2>
+<p>Okay, enough about design philosophy. What is it actually capable of?</p>
+<p>Right now, pretty much nothing, as mentioned above. But after ruminating on this project for years, I finally think I've got enough of the basic concepts ironed out to actually start the development work.</p>
+<p>Eventually, my plan is for it to do literally everything popular civil CAD packages can do: in addition to drawing 2d geometry, it will be able to create and edit surface (TIN) data, create and edit surface <em>profiles</em>, work with pipe networks, and even expand QGIS' print layout capabilities to more closely resemble CAD packages.</p>
+<p>All of that is probably years of work, if it get accomplished at all (I certainly hope it does). I can't bite off all of that in one go, so the rough framework is as follows:</p>
+<ul>
+<li>Version 1.0: 
+<ul>
+<li>interface setup</li>
+<li>implement &quot;create geometry&quot; tools</li>
+<li>implement &quot;modify geometry&quot; tools</li>
+</ul>
+</li>
+<li>Version 2.0:
+<ul>
+<li>implement grading/TIN editing tools</li>
+<li>implement dimensioning tools</li>
+<li>implement analysis tools</li>
+</ul>
+</li>
+<li>Version 3.0:
+<ul>
+<li>implement pipe network tools</li>
+<li>implement layout tools</li>
+<li>implement ETL (extract, transform, load) tools</li>
+</ul>
+</li>
+<li>Version 4.0:
+<ul>
+<li>implement survey-related tools</li>
+</ul>
+</li>
+</ul>
+<p>As of this writing, I'm already well on my way to getting the overall interface set up; I actually think I can have it (mostly) done fairly soon. Getting the create and modify tools implemented will take a while just because there's so many of them, but given that the programmatic functionality is already there it should be at least somewhat straightforward.</p>
+<p>Version 2.0 is going to be a real beast. Working with topologically correct TIN data is a notoriously finicky task, and will require some pretty beastly code. However, I'm taking solace in the fact that FreeCAD has recently solved their issues with the infamous 3d instability issue, and I'll be able to look at their code as a way forward. I anticipate creating my own 3d TIN kernel from scratch, in Rust - definitely a large undertaking.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Maybe I'm delusional in even attempting this project. We'll see how things go. But for now, I'm choosing to be optimistic!</p>
+<p>Follow along on this blog for updates when I have them. I expect to upload the first version to the QGIS plugin system in a couple of months, and hopefully have Version 1.0 out a few months after that!</p>
+
+
+<p class="tags-data">
+
+</p>
+
+      </main>
+      <footer>
+          <hr>
+<div id="footer-container">
+  
+  <div>
+    <p>Theme and color theme licensed under <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Licence_MIT">MIT</a>.<br>
+      Built with <a target="_blank" rel="noopener noreferrer" href="https://www.getzola.org">Zola</a> using <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/anemone">anemone</a> theme, <a target="_blank" rel="noopener noreferrer" href="https://speyll.github.io/suCSS/">suCSS</a> framework &amp; <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/veqev">veqev</a>.<br>
+    </p>
+
+  </div>
+  
+</div>
+
+      </footer>
+</body>
+</html>
