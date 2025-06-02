@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="robots" content="index, follow">
+
+
+
+
+
+
+
+
+
+
+<title>Setting Up a Dev Environment for QGIS Plugins</title>
+
+
+
+<meta name="title" content="Setting Up a Dev Environment for QGIS Plugins">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://millsapjohn.github.io/blog/qpython/">
+
+<meta property="og:site_name" content="">
+
+
+<meta property="og:title" content="Setting Up a Dev Environment for QGIS Plugins">
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://millsapjohn.github.io/blog/qpython/">
+
+<meta property="twitter:title" content="Setting Up a Dev Environment for QGIS Plugins">
+
+
+
+
+<link rel="canonical" href="https://millsapjohn.github.io/blog/qpython/">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/reset-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/suCSS-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://millsapjohn.github.io/css/style.css"/>
+
+<script src="https://millsapjohn.github.io/js/script.js" defer></script>
+
+
+</head>
+<body>
+      <header>
+          
+
+  
+
+
+
+      </header>
+      <main>
+          
+<h1>Setting Up a Dev Environment for QGIS Plugins</h1>
+
+
+
+<p>A large part of my development work right now is spent on QGIS plugins. This is slightly complicated for a relatively inexperienced programmer like me because, like any good Python dev, I want to use virtual environments for anything complex, and the QGIS Python libraries aren't available from a standard repository; instead, they come bundled with the QGIS install as standard .py files. I've spent a decent amount of time figuring out how to get my venv set up correctly so I can avoid conflicting dependencies, while still having autocomplete/suggestions available in my text editor. Here's what I've worked out.</p>
+<h2 id="development-tools">Development Tools</h2>
+<p>I'm currently using helix as my text editor - it's dead simple to get language servers running. Additionally, because I switch between Windows and Linux machines, I use Nushell as my shell. That becomes pretty important later on. I use PyLSP as my language server, a variety of tools (such as black and pyflakes) for formatting/linting, and finally, I'm currently experimenting with Poetry for packaging.</p>
+<h2 id="setting-up-the-virtual-environment">Setting up the Virtual Environment</h2>
+<p>The first step is setting up the project. Because I have a template repository I use to kick off my projects, with things like a license file and a setup.cfg for my formatting/linting tools, I usually create the bones of the project first, then run <code>poetry init</code> to set up the pyproject.toml file. Python's <code>venv</code> module, which Poetry uses under the hood, helpfully sets up activation scripts in a variety of languages, including nu. The next step involves editing that file.</p>
+<h2 id="editing-activate-nu">Editing activate.nu</h2>
+<p>The pre-generated <code>activate.nu</code> script that <code>venv</code> creates is, unfortunately, somewhat broken - in an ideal world you want to have <code>activate</code> and <code>deactivate</code> available as commands for your virtual environment, but it's not fully working right now. Thankfully, the bones of the script - related to setting your Python interpreter and environment variables - work just fine. So after running <code>poetry init</code> and following the prompts, you can navigate to the newly created environment - in my case, I keep it in a subdirectory in my main project repo - and edit the script located at <code>Scripts/activate.nu</code>. </p>
+<p>The last line of the script is where the issue lies; it looks like this:</p>
+<pre><code>export alias deactivate = overlay hide deactivate
+</code></pre>
+<p>If you try to use this script, the nu interpreter will complain that the <code>overlay</code> keyword can't be used in a pipeline; so I simply comment it out. But what does that mean?</p>
+<h2 id="overlays-in-nushell">Overlays in Nushell</h2>
+<p>In Nushell, overlays are pretty directly analogous to Python virtual environments; they're collections of code and environment variables that are only active for as long as the overlay is active. The <code>activate.nu</code> script is intended to set up an overlay as a wrapper around the Python <code>venv</code>. Overlays are activated by the command <code>overlay use nu_file.nu</code> and deactivated with <code>overlay hide overlay_name</code>. The last line in the file, discussed above, is trying to create a command alias that will tell Nushell to hide the overlay; unfortunately, as the error message will tell you, the Nushell interpreter currently doesn't let you use the keyword <code>overlay</code> in an alias. This is an annoyance - and something I plan on looking into at some point - but for now, I just comment out that line and use the overlay the &quot;normal&quot; way. I also make some additional edits:</p>
+<h2 id="adding-environment-variables-to-activate-nu">Adding Environment Variables to activate.nu</h2>
+<p>PyLSP can resolve any Python modules that are currently in the <code>PYTHONPATH</code> environment variable - so a logical step would be to just add the location of QGIS' special packages to <code>PYTHONPATH</code>. However, this causes issues because there are a LOT of packages in that install; when I originally tried this method, I ran into conflicts almost immediately. The method I've come up with is to set those environment variables within <code>activate.nu</code>.</p>
+<p>Nushell files allow you to set environment variables with the <code>load-env</code> keyword. So somewhere in <code>activate.nu</code>, I define a variable with the list of paths I need. Once again, I've found that this requires some special attention, as it seems PyLSP only recognizes these paths when they're stored the way Windows natively stores them: as a single string, separated by semicolons. For simplicity's sake and to avoid retyping, I saved the string in my .config directory as a plain text file. Then I add this to <code>activate.nu</code>:</p>
+<pre><code>load-env {PYTHONPATH: (open ($nu.default-config-dir | path join &quot;qpath.txt&quot;))}
+</code></pre>
+<p>Now, activate the environment, from the root of my repo, I just run </p>
+<pre><code>overlay use .venv&#x2F;Scripts&#x2F;activate.nu
+</code></pre>
+<p>and voila! Not only is the Python virtual environment working, but I have my QGIS modules available for PyLSP.</p>
+<h2 id="qgis-python-paths">QGIS Python Paths</h2>
+<p>For reference, the paths you need are, on Windows, all located in the Program Files directory, under the version name of your QGIS install - in my case, at the time of writing, &quot;C:\Program Files\QGIS 3.36.0&quot;. Within that directory, you need to add:</p>
+<ul>
+<li>apps\qgis\Python</li>
+<li>apps\qgis\plugins</li>
+<li>apps\qt5\plugins</li>
+<li>apps\Python39\Lib\site-packages</li>
+</ul>
+<p>Note that the version number for the last one will no doubt change as time goes on.</p>
+<h2 id="limitations">Limitations</h2>
+<p>As mentioned before, the annoying thing right now is that the script doesn't allow you to use the familiar <code>activate</code> and <code>deactivate</code> commands. I plan on looking into this at some point and seeing if I can work out a solution.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This procedure is handy, not only for making sure your LSP completions work, but also for making sure you're working with whatever packages QGIS has installed. I couldn't find this info anywhere else on the web, so I wanted to write it down - not just for other users, but also for myself when I inevitably forget somewhere down the line!</p>
+
+
+<p class="tags-data">
+
+</p>
+
+      </main>
+      <footer>
+          <hr>
+<div id="footer-container">
+  
+  <div>
+    <p>Theme and color theme licensed under <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Licence_MIT">MIT</a>.<br>
+      Built with <a target="_blank" rel="noopener noreferrer" href="https://www.getzola.org">Zola</a> using <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/anemone">anemone</a> theme, <a target="_blank" rel="noopener noreferrer" href="https://speyll.github.io/suCSS/">suCSS</a> framework &amp; <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/veqev">veqev</a>.<br>
+    </p>
+
+  </div>
+  
+</div>
+
+      </footer>
+</body>
+</html>

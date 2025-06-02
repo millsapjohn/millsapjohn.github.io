@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="robots" content="index, follow">
+
+
+
+
+
+
+
+
+
+
+<title>Flyout Docks, and CivilTools Updates</title>
+
+
+
+<meta name="title" content="Flyout Docks, and CivilTools Updates">
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://millsapjohn.github.io/blog/docks/">
+
+<meta property="og:site_name" content="">
+
+
+<meta property="og:title" content="Flyout Docks, and CivilTools Updates">
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://millsapjohn.github.io/blog/docks/">
+
+<meta property="twitter:title" content="Flyout Docks, and CivilTools Updates">
+
+
+
+
+<link rel="canonical" href="https://millsapjohn.github.io/blog/docks/">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/reset-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://speyll.github.io/suCSS/suCSS-min.css"/>
+<link rel="stylesheet" type="text/css" href="https://millsapjohn.github.io/css/style.css"/>
+
+<script src="https://millsapjohn.github.io/js/script.js" defer></script>
+
+
+</head>
+<body>
+      <header>
+          
+
+  
+
+
+
+      </header>
+      <main>
+          
+<h1>Flyout Docks, and CivilTools Updates</h1>
+
+
+
+<h1 id="a-new-plugin-has-entered-the-chat">A New Plugin Has Entered the Chat</h1>
+<p>Because I'm incapable of not being Like That sometimes, I've spent some time over the last week or so developing one of the items on my plugin laundry list: flyout docks. Inspired by a popular CAD package, this plugin creates vertical buttons on the sides and bottom of the main QGIS window, one for each dock widget. Clicking the dock widget's button toggles its view state, and any other widgets that were visible in that dock area are hidden when a widget is toggled visible (in other words, if Widget A is visible and the Widget B button is clicked, Widget A is no longer visible and Widget B is now visible).</p>
+<p>This is functionality I've wanted for a while, and working on it has given me deeper familiarity with the incredibly deep Qt API, which can only be a good thing.</p>
+<h1 id="but-civiltools-wasn-t-neglected">But CivilTools Wasn't Neglected</h1>
+<p>Never fear, hypothetical reader who's deeply invested in CivilTools for some reason! I've put a good amount of work into it, as well. Since my last update, I've:</p>
+<ul>
+<li>updated the crosshairs to only be visible in the map view</li>
+<li>worked out the selection behavior, including window select, crossing select, and the deselect versions of both as well</li>
+<li>refactored the MapTool code for easier extension</li>
+</ul>
+<p>The last isn't sexy, but it was necessary. I've created a base MapTool from which all the others will inherit, allowing me to save a lot of repetition in the code.</p>
+<p>The second item, working out selection behavior, was a BEAR. The ability to select single features with a click, or multiple features with either a window or a fence, or deselect in any of those three ways by holding down SHIFT...it was a lot to work through. As your resident Not Very Good Programmer, conceptualizing the logic flow for what a mouse click does or doesn't mean in any of those contexts stretched my brain a little bit. I'm honestly pretty proud that I was able to work it out, and it works pretty well!</p>
+<p>I've also been working on snaps, although I might have ended up putting the cart before the horse a little bit. Initially my idea was to grab all the &quot;static&quot; snaps (i.e., vertices, midpoints, things that don't change depending on the cursor location). However, doing this in the main thread causes significant slowdown. I could put it in the background using a QgsTask (and I'm going to explore this option), but it may be worthwhile to just leave the &quot;snap grabbing&quot; to happen once a command is active. This will require some testing.</p>
+<p>I've also been exploring some QGIS housekeeping, such as using Jupyter notebooks with QGIS. As with everything QGIS, the setup seems to be a little involved; but if I can figure it out it will be worthwhile.</p>
+<h1 id="civiltools-code-count">CivilTools Code Count</h1>
+<p>Currently sitting at a little under 1500 LOC.</p>
+
+
+<p class="tags-data">
+
+</p>
+
+      </main>
+      <footer>
+          <hr>
+<div id="footer-container">
+  
+  <div>
+    <p>Theme and color theme licensed under <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Licence_MIT">MIT</a>.<br>
+      Built with <a target="_blank" rel="noopener noreferrer" href="https://www.getzola.org">Zola</a> using <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/anemone">anemone</a> theme, <a target="_blank" rel="noopener noreferrer" href="https://speyll.github.io/suCSS/">suCSS</a> framework &amp; <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/veqev">veqev</a>.<br>
+    </p>
+
+  </div>
+  
+</div>
+
+      </footer>
+</body>
+</html>
